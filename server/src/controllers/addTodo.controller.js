@@ -7,10 +7,14 @@ const addTodo = async (req,res) => {
             todoDescription,
             todoBody
         });
-        await newTodo.save(); // Save the newTodo to the database
+        await newTodo.save();
+        
+        const createdUser = Todo.findOne(newTodo.id).select(
+            "-_id -__v"
+        ) // Save the newTodo to the database
 
         console.log("Todo added successfully");
-        res.status(201).json({ msg: "Todo added successfully", newTodo });
+        res.status(201).json({ msg: "Todo added successfully", createdUser });
     }catch (e){
         res.json({msg : "err occured while adding Todo to the database",error : {isError : true , error : e}});
     }
